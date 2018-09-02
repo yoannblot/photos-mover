@@ -8,7 +8,7 @@ final class ImageReader {
      *
      * @return string
      */
-    private function getDirectory (string $path, string $format): string {
+    private function getDirectory ($path, $format) {
         $exifData = exif_read_data($path);
         $timestamp = $exifData['FileDateTime'];
 
@@ -22,7 +22,7 @@ final class ImageReader {
      *
      * @return string
      */
-    public function getNewPath (string $outputDirectory, string $path, string $format): string {
+    public function getNewPath ($outputDirectory, $path, $format) {
         if (false === strpos($outputDirectory, DIRECTORY_SEPARATOR, -1)) {
             $outputDirectory .= DIRECTORY_SEPARATOR;
         }

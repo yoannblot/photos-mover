@@ -4,11 +4,11 @@ final class Finder {
 
     /**
      * @param string $directory
-     * @param string $imageExtension
+     * @param string[] $imageExtensions
      *
-     * @return array
+     * @return string[]
      */
-    public function find ($directory, $imageExtension) {
+    public function find ($directory, array $imageExtensions) {
         if (!is_dir($directory)) {
             error_log("Given directory '$directory' is not a directory.");
 
@@ -17,10 +17,11 @@ final class Finder {
 
         $pattern = $directory . DIRECTORY_SEPARATOR . '*';
 
-        $extensions = [
-            strtolower($imageExtension),
-            strtoupper($imageExtension)
-        ];
+        $extensions = [];
+        foreach ($imageExtensions as $extension) {
+            $extensions[] = strtolower($extension);
+            $extensions[] = strtoupper($extension);
+        }
 
         return array_filter(array_map(function ($file) use ($extensions) {
             $extension = basename($file);

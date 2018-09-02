@@ -5,7 +5,7 @@ if ($argc < 3) {
 
 $directory = $argv[1];
 $outputDirectory = $argv[2];
-$imageExtension = 'jpg';
+$imageExtensions = ['jpg', 'gif', 'png', 'jpeg'];
 $format = 'Y/m/d';
 
 require __DIR__ . '/src/Finder.php';
@@ -17,7 +17,7 @@ $reader = new ImageReader();
 $mover = new Mover();
 
 error_log("Start moving files from '$directory' to $outputDirectory'");
-foreach ($finder->find($directory, $imageExtension) as $image) {
+foreach ($finder->find($directory, $imageExtensions) as $image) {
     $newFilePath = $reader->getNewPath($outputDirectory, $image, $format);
     error_log("Will move '$image' to $newFilePath'");
     $mover->move($image, $newFilePath);

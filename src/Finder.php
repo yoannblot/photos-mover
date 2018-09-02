@@ -15,8 +15,21 @@ final class Finder {
             return [];
         }
 
-        $pattern = $directory . DIRECTORY_SEPARATOR . '*.' . $imageExtension;
+        $pattern = $directory . DIRECTORY_SEPARATOR . '*';
 
-        return glob($pattern, GLOB_NOSORT);
+        $extensions = [
+            strtolower($imageExtension),
+            strtoupper($imageExtension)
+        ];
+
+        return array_filter(array_map(function ($file) use ($extensions) {
+            $extension = basename($file);
+            $extension = substr($extension, strrpos($extension, '.') + 1);
+            if (in_array($extension, $extensions)) {
+                return $file;
+            }
+
+            return null;
+        }, glob($pattern, GLOB_NOSORT)));
     }
 }

@@ -1,7 +1,10 @@
 <?php
+if ($argc < 3) {
+    throw new \InvalidArgumentException('You have to provide at least two arguments : source directory and destination directory');
+}
 
-$directory = 'C:\Users\Yoann\Pictures\Camera Roll';
-$outputDirectory = 'D:/images/';
+$directory = $argv[1];
+$outputDirectory = $argv[2];
 $imageExtension = 'jpg';
 $format = 'Y/m/d';
 

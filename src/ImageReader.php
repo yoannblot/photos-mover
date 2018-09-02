@@ -23,6 +23,9 @@ final class ImageReader {
      * @return string
      */
     public function getNewPath (string $outputDirectory, string $path, string $format): string {
+        if (false === strpos($outputDirectory, DIRECTORY_SEPARATOR, -1)) {
+            $outputDirectory .= DIRECTORY_SEPARATOR;
+        }
         $newDirectory = $outputDirectory . $this->getDirectory($path, $format);
 
         $newFilePath = $newDirectory . strtolower(basename($path));

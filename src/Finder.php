@@ -8,7 +8,7 @@ final class Finder {
      *
      * @return string[]
      */
-    public function find ($directory, array $imageExtensions) {
+    public function find (string $directory, array $imageExtensions) : array {
         if (!is_dir($directory)) {
             error_log("Given directory '$directory' is not a directory.");
 
@@ -23,7 +23,7 @@ final class Finder {
             $extensions[] = strtoupper($extension);
         }
 
-        return array_filter(array_map(function ($file) use ($extensions) {
+        return array_filter(array_map(function (string $file) use ($extensions) {
             $extension = basename($file);
             $extension = substr($extension, strrpos($extension, '.') + 1);
             if (in_array($extension, $extensions)) {

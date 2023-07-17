@@ -8,7 +8,6 @@ use App\Finder;
 use App\ImageReader;
 use App\MoveMediaFiles;
 use App\Mover;
-use App\Type\Directory;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
@@ -33,10 +32,10 @@ final class MoveMediaFilesTest extends TestCase
         Fixtures::duplicateImageIn($sourceDirectory);
 
         // Act
-        $this->sut->move(new Directory($sourceDirectory), new Directory($destinationDirectory));
+        $this->sut->move($sourceDirectory, $destinationDirectory);
 
         // Assert
-        $expectedImagePath = $destinationDirectory
+        $expectedImagePath = $destinationDirectory->getPath()
             . DIRECTORY_SEPARATOR . '2023'
             . DIRECTORY_SEPARATOR . '07'
             . DIRECTORY_SEPARATOR . '17'

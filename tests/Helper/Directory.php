@@ -4,36 +4,28 @@ declare(strict_types=1);
 
 namespace Tests\Helper;
 
-use InvalidArgumentException;
+use App\Type\Directory as DirectoryType;
 
 final class Directory
 {
-    public static function create(string $directoryName): string
+    public static function create(string $directoryName): DirectoryType
     {
         $directoryPath = __DIR__ . DIRECTORY_SEPARATOR . $directoryName;
 
         mkdir($directoryPath, 0777, true);
 
-        return $directoryPath;
+        return new DirectoryType($directoryPath);
     }
 
-    public static function remove(string $dirPath): void
+    public static function remove(DirectoryType $directory): void
     {
-        if (!is_dir($dirPath)) {
-            throw new InvalidArgumentException("$dirPath must be a directory");
-        }
-
-        if (!str_ends_with($dirPath, '/')) {
-            $dirPath .= '/';
-        }
-        $files = glob($dirPath . '*', GLOB_MARK);
-        foreach ($files as $file) {
-            if (is_dir($file)) {
-                self::remove($file);
+        foreach (glob($directory->getPath() . '*', GLOB_MARK) as $path) {
+            if (is_dir($path)) {
+                self::remove(new DirectoryType($path));
             } else {
-                unlink($file);
+                unlink($path);
             }
         }
-        rmdir($dirPath);
+        rmdir($directory->getPath());
     }
 }

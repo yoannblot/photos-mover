@@ -19,21 +19,9 @@ final class FileReader
 
     public function getNewPath(Directory $outputDirectory, File $file): string
     {
-        $format = 'Y/m/d';
-        $newDirectory = $outputDirectory->getPath() . $this->getDirectory($file, $format);
-
-        $newFilePath = $newDirectory . strtolower($file->getDirectory());
-        while (is_file($newFilePath)) {
-            $newFilePath = substr($newFilePath, 0, strrpos($newFilePath, '.')) . "-2.$format";
-        }
-
-        return $newFilePath;
-    }
-
-    private function getDirectory(File $file, string $format): string
-    {
         $metadata = $this->imageReader->extractMetadata($file);
+        $newDirectory = $outputDirectory->getPath() . $metadata->getDate()->format('Y/m/d') . DIRECTORY_SEPARATOR;
 
-        return date($format, $metadata->getDate()->getTimestamp()) . DIRECTORY_SEPARATOR;
+        return $newDirectory . strtolower($file->getDirectory());
     }
 }

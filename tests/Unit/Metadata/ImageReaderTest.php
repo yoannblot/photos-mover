@@ -19,7 +19,7 @@ final class ImageReaderTest extends TestCase
     }
 
     #[Test]
-    public function it_extract_datetime(): void
+    public function it_extracts_datetime(): void
     {
         // Arrange
         $file = Fixtures::getImageFile();

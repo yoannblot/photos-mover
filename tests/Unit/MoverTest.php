@@ -5,29 +5,16 @@ declare(strict_types=1);
 namespace Tests\Unit;
 
 use App\Mover;
+use App\Type\File;
 use PHPUnit\Framework\TestCase;
 
 final class MoverTest extends TestCase
 {
     private Mover $sut;
 
-    /**
-     * @test
-     */
-    public function it_moves_a_file_into_a_directory(): void
+    protected function setUp(): void
     {
-        // Arrange
-        $sourcePath = __DIR__ . DIRECTORY_SEPARATOR . 'source-file.txt';
-        $destinationPath = __DIR__ . DIRECTORY_SEPARATOR . 'destination-file.txt';
-        file_put_contents($sourcePath, 'test');
-
-        // Act
-        $this->sut->move($sourcePath, $destinationPath);
-
-        // Assert
-        $this->assertFileExists($destinationPath);
-        $this->assertFileDoesNotExist($sourcePath);
-        unlink($destinationPath);
+        $this->sut = new Mover();
     }
 
     /**
@@ -41,7 +28,7 @@ final class MoverTest extends TestCase
         file_put_contents($sourcePath, 'test');
 
         // Act
-        $this->sut->move($sourcePath, $destinationPath);
+        $this->sut->move(new File($sourcePath), $destinationPath);
 
         // Assert
         $this->assertDirectoryExists(dirname($destinationPath));
@@ -49,8 +36,22 @@ final class MoverTest extends TestCase
         rmdir(dirname($destinationPath));
     }
 
-    protected function setUp(): void
+    /**
+     * @test
+     */
+    public function it_moves_a_file_into_a_directory(): void
     {
-        $this->sut = new Mover();
+        // Arrange
+        $sourcePath = __DIR__ . DIRECTORY_SEPARATOR . 'source-file.txt';
+        $destinationPath = __DIR__ . DIRECTORY_SEPARATOR . 'destination-file.txt';
+        file_put_contents($sourcePath, 'test');
+
+        // Act
+        $this->sut->move(new File($sourcePath), $destinationPath);
+
+        // Assert
+        $this->assertFileExists($destinationPath);
+        $this->assertFileDoesNotExist($sourcePath);
+        unlink($destinationPath);
     }
 }

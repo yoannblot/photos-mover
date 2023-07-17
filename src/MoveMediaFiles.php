@@ -24,7 +24,7 @@ final class MoveMediaFiles
         error_log("Start moving files from '$sourceDirectory' to $destinationDirectory'");
         foreach ($this->finder->find($sourceDirectory, self::IMAGE_EXTENSIONS) as $image) {
             $newFilePath = $this->reader->getNewPath($destinationDirectory, $image, 'Y/m/d');
-            error_log("Will move '$image' to $newFilePath'");
+            error_log("Will move '{$image->getPath()}' to $newFilePath'");
             $this->mover->move($image, $newFilePath);
         }
     }

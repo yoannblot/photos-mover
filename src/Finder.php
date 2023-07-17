@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Type\File;
+
 final class Finder
 {
     /**
-     * @return string[]
+     * @return File[]
      */
     public function find(string $directory, array $imageExtensions): array
     {
@@ -30,7 +32,7 @@ final class Finder
                 $extension = basename($file);
                 $extension = substr($extension, strrpos($extension, '.') + 1);
                 if (in_array($extension, $extensions, true)) {
-                    return $file;
+                    return new File($file);
                 }
 
                 return null;

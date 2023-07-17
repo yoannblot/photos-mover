@@ -1,28 +1,9 @@
 <?php
 
-final class ImageReader {
-
-    /**
-     * @param string $path
-     * @param string $format
-     *
-     * @return string
-     */
-    private function getDirectory (string $path, string $format): string {
-        $exifData = exif_read_data($path);
-        $timestamp = $exifData['FileDateTime'];
-
-        return date($format, $timestamp) . DIRECTORY_SEPARATOR;
-    }
-
-    /**
-     * @param string $outputDirectory
-     * @param string $path
-     * @param string $format
-     *
-     * @return string
-     */
-    public function getNewPath (string $outputDirectory, string $path, string $format): string {
+final class ImageReader
+{
+    public function getNewPath(string $outputDirectory, string $path, string $format): string
+    {
         if (false === strpos($outputDirectory, DIRECTORY_SEPARATOR, -1)) {
             $outputDirectory .= DIRECTORY_SEPARATOR;
         }
@@ -35,5 +16,13 @@ final class ImageReader {
         }
 
         return $newFilePath;
+    }
+
+    private function getDirectory(string $path, string $format): string
+    {
+        $exifData = exif_read_data($path);
+        $timestamp = $exifData['FileDateTime'];
+
+        return date($format, $timestamp) . DIRECTORY_SEPARATOR;
     }
 }

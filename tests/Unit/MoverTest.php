@@ -2,17 +2,14 @@
 
 declare(strict_types=1);
 
+namespace Tests\Unit;
+
 use App\Mover;
 use PHPUnit\Framework\TestCase;
 
 final class MoverTest extends TestCase
 {
     private Mover $sut;
-
-    protected function setUp(): void
-    {
-        $this->sut = new Mover();
-    }
 
     /**
      * @test
@@ -50,5 +47,10 @@ final class MoverTest extends TestCase
         $this->assertDirectoryExists(dirname($destinationPath));
         unlink($destinationPath);
         rmdir(dirname($destinationPath));
+    }
+
+    protected function setUp(): void
+    {
+        $this->sut = new Mover();
     }
 }

@@ -2,6 +2,7 @@
 
 use App\Finder;
 use App\ImageReader;
+use App\MoveMediaFiles;
 use App\Mover;
 
 if ($argc < 3) {
@@ -10,18 +11,7 @@ if ($argc < 3) {
     );
 }
 
-$directory = $argv[1];
-$outputDirectory = $argv[2];
-$imageExtensions = ['jpg', 'gif', 'png', 'jpeg'];
-$format = 'Y/m/d';
+[, $sourceDirectory, $destinationDirectory] = $argv;
 
-$finder = new Finder();
-$reader = new ImageReader();
-$mover = new Mover();
-
-error_log("Start moving files from '$directory' to $outputDirectory'");
-foreach ($finder->find($directory, $imageExtensions) as $image) {
-    $newFilePath = $reader->getNewPath($outputDirectory, $image, $format);
-    error_log("Will move '$image' to $newFilePath'");
-    $mover->move($image, $newFilePath);
-}
+$moveMediaFiles = new MoveMediaFiles(new Finder(), new ImageReader(), new Mover());
+$moveMediaFiles->move($sourceDirectory, $destinationDirectory);

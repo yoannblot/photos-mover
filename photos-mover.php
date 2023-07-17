@@ -1,16 +1,19 @@
 <?php
+
+use App\Finder;
+use App\ImageReader;
+use App\Mover;
+
 if ($argc < 3) {
-    throw new \InvalidArgumentException('You have to provide at least two arguments : source directory and destination directory');
+    throw new \InvalidArgumentException(
+        'You have to provide at least two arguments : source directory and destination directory'
+    );
 }
 
 $directory = $argv[1];
 $outputDirectory = $argv[2];
 $imageExtensions = ['jpg', 'gif', 'png', 'jpeg'];
 $format = 'Y/m/d';
-
-require __DIR__ . '/src/Finder.php';
-require __DIR__ . '/src/ImageReader.php';
-require __DIR__ . '/src/Mover.php';
 
 $finder = new Finder();
 $reader = new ImageReader();

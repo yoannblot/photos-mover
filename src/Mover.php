@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace App;
+
 final class Mover
 {
     public function move(string $source, string $destination): void

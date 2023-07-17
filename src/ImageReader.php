@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
+namespace App;
+
 final class ImageReader
 {
     public function getNewPath(string $outputDirectory, string $path, string $format): string

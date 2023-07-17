@@ -9,10 +9,10 @@ use App\Type\Directory;
 final class MoveMediaFiles
 {
     private Finder $finder;
-    private ImageReader $reader;
+    private FileReader $reader;
     private Mover $mover;
 
-    public function __construct(Finder $finder, ImageReader $reader, Mover $mover)
+    public function __construct(Finder $finder, FileReader $reader, Mover $mover)
     {
         $this->finder = $finder;
         $this->reader = $reader;
@@ -23,7 +23,7 @@ final class MoveMediaFiles
     {
         error_log("Start moving files from '{$source->getPath()}' to {$destination->getPath()}'");
         foreach ($this->finder->find($source) as $file) {
-            $newFilePath = $this->reader->getNewPath($destination, $file, 'Y/m/d');
+            $newFilePath = $this->reader->getNewPath($destination, $file);
             error_log("Will move '{$file->getPath()}' to $newFilePath'");
             $this->mover->move($file, $newFilePath);
         }

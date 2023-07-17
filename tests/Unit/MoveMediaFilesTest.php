@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Unit;
 
+use App\FileReader;
 use App\Finder;
-use App\ImageReader;
+use App\Metadata\ImageReader;
 use App\MoveMediaFiles;
 use App\Mover;
 use PHPUnit\Framework\TestCase;
@@ -18,7 +19,7 @@ final class MoveMediaFilesTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->sut = new MoveMediaFiles(new Finder(), new ImageReader(), new Mover());
+        $this->sut = new MoveMediaFiles(new Finder(), new FileReader(new ImageReader()), new Mover());
     }
 
     /**

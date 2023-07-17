@@ -25,6 +25,11 @@ final class File
         return basename($this->path);
     }
 
+    public function getExtension(): string
+    {
+        return strtolower(substr($this->path, strrpos($this->path, '.') + 1));
+    }
+
     public function getPath(): string
     {
         return $this->path;

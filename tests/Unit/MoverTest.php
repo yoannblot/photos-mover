@@ -32,4 +32,23 @@ final class MoverTest extends TestCase
         $this->assertFileDoesNotExist($sourcePath);
         unlink($destinationPath);
     }
+
+    /**
+     * @test
+     */
+    public function it_creates_the_destination_directory_if_it_does_not_exist(): void
+    {
+        // Arrange
+        $sourcePath = __DIR__ . DIRECTORY_SEPARATOR . 'source-file.txt';
+        $destinationPath = __DIR__ . DIRECTORY_SEPARATOR . 'destination' . DIRECTORY_SEPARATOR . 'file.txt';
+        file_put_contents($sourcePath, 'test');
+
+        // Act
+        $this->sut->move($sourcePath, $destinationPath);
+
+        // Assert
+        $this->assertDirectoryExists(dirname($destinationPath));
+        unlink($destinationPath);
+        rmdir(dirname($destinationPath));
+    }
 }

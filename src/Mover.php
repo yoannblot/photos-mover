@@ -10,7 +10,7 @@ final class Mover
     {
         $destinationDirectory = dirname($destination);
         if (!is_dir($destinationDirectory)) {
-            mkdir($destinationDirectory, true, 0705);
+            mkdir($destinationDirectory, 0705, true);
         }
         if (rename($source, $destination)) {
             error_log("Move '$source' to '$destination'");

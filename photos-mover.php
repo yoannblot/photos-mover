@@ -4,6 +4,7 @@ use App\Finder;
 use App\ImageReader;
 use App\MoveMediaFiles;
 use App\Mover;
+use App\Type\Directory;
 
 if ($argc < 3) {
     throw new \InvalidArgumentException(
@@ -14,4 +15,4 @@ if ($argc < 3) {
 [, $sourceDirectory, $destinationDirectory] = $argv;
 
 $moveMediaFiles = new MoveMediaFiles(new Finder(), new ImageReader(), new Mover());
-$moveMediaFiles->move($sourceDirectory, $destinationDirectory);
+$moveMediaFiles->move(new Directory($sourceDirectory), new Directory($destinationDirectory));

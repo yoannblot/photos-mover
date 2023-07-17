@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Type\Directory;
+
 final class MoveMediaFiles
 {
     private const IMAGE_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg'];
@@ -19,13 +21,13 @@ final class MoveMediaFiles
         $this->mover = $mover;
     }
 
-    public function move(string $sourceDirectory, string $destinationDirectory): void
+    public function move(Directory $source, Directory $destination): void
     {
-        error_log("Start moving files from '$sourceDirectory' to $destinationDirectory'");
-        foreach ($this->finder->find($sourceDirectory, self::IMAGE_EXTENSIONS) as $image) {
-            $newFilePath = $this->reader->getNewPath($destinationDirectory, $image, 'Y/m/d');
-            error_log("Will move '{$image->getPath()}' to $newFilePath'");
-            $this->mover->move($image, $newFilePath);
+        error_log("Start moving files from '{$source->getPath()}' to {$destination->getPath()}'");
+        foreach ($this->finder->find($source, self::IMAGE_EXTENSIONS) as $file) {
+            $newFilePath = $this->reader->getNewPath($destination, $file, 'Y/m/d');
+            error_log("Will move '{$file->getPath()}' to $newFilePath'");
+            $this->mover->move($file, $newFilePath);
         }
     }
 }

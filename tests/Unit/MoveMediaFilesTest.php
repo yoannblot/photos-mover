@@ -8,8 +8,9 @@ use App\Finder;
 use App\ImageReader;
 use App\MoveMediaFiles;
 use App\Mover;
+use App\Type\Directory;
 use PHPUnit\Framework\TestCase;
-use Tests\Helper\Directory;
+use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
 
 final class MoveMediaFilesTest extends TestCase
@@ -27,12 +28,12 @@ final class MoveMediaFilesTest extends TestCase
     public function it_moves_an_image_based_on_its_metadata(): void
     {
         // Arrange
-        $sourceDirectory = Directory::create('Fixtures-' . __FUNCTION__);
-        $destinationDirectory = Directory::create('Output-' . __FUNCTION__);
+        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
+        $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
         Fixtures::duplicateImageIn($sourceDirectory);
 
         // Act
-        $this->sut->move($sourceDirectory, $destinationDirectory);
+        $this->sut->move(new Directory($sourceDirectory), new Directory($destinationDirectory));
 
         // Assert
         $expectedImagePath = $destinationDirectory
@@ -43,7 +44,7 @@ final class MoveMediaFilesTest extends TestCase
         $this->assertFileExists($expectedImagePath);
 
         unlink($expectedImagePath);
-        Directory::remove($destinationDirectory);
-        Directory::remove($sourceDirectory);
+        DirectoryHelper::remove($destinationDirectory);
+        DirectoryHelper::remove($sourceDirectory);
     }
 }

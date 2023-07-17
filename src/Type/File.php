@@ -8,6 +8,9 @@ final class File
 {
     private string $path;
 
+    /**
+     * @throws \InvalidArgumentException
+     */
     public function __construct(string $path)
     {
         if (!file_exists($path)) {

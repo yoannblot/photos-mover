@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App;
 
+use App\Type\Directory;
 use App\Type\File;
 
 final class Finder
@@ -11,16 +12,8 @@ final class Finder
     /**
      * @return File[]
      */
-    public function find(string $directory, array $imageExtensions): array
+    public function find(Directory $directory, array $imageExtensions): array
     {
-        if (!is_dir($directory)) {
-            error_log("Given directory '$directory' is not a directory.");
-
-            return [];
-        }
-
-        $pattern = $directory . DIRECTORY_SEPARATOR . '*';
-
         $extensions = [];
         foreach ($imageExtensions as $extension) {
             $extensions[] = strtolower($extension);
@@ -28,7 +21,7 @@ final class Finder
         }
 
         return array_filter(
-            array_map(static function (string $file) use ($extensions) {
+            array_map(static function (string $file) use ($extensions): ?File {
                 $extension = basename($file);
                 $extension = substr($extension, strrpos($extension, '.') + 1);
                 if (in_array($extension, $extensions, true)) {
@@ -36,7 +29,7 @@ final class Finder
                 }
 
                 return null;
-            }, glob($pattern, GLOB_NOSORT)),
+            }, glob($directory->getPath() . DIRECTORY_SEPARATOR . '*', GLOB_NOSORT)),
         );
     }
 }

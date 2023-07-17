@@ -12,12 +12,12 @@ final class Finder
     /**
      * @return File[]
      */
-    public function find(Directory $directory, array $extensions): array
+    public function find(Directory $directory): array
     {
         return array_filter(
-            array_map(static function (string $path) use ($extensions): ?File {
+            array_map(static function (string $path): ?File {
                 $file = new File($path);
-                if (!in_array($file->getExtension(), $extensions, true)) {
+                if (!$file->isImage()) {
                     return null;
                 }
 

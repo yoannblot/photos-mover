@@ -6,6 +6,8 @@ namespace App\Type;
 
 final class File
 {
+    private const IMAGE_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg'];
+
     private string $path;
 
     /**
@@ -25,13 +27,18 @@ final class File
         return basename($this->path);
     }
 
-    public function getExtension(): string
-    {
-        return strtolower(substr($this->path, strrpos($this->path, '.') + 1));
-    }
-
     public function getPath(): string
     {
         return $this->path;
+    }
+
+    public function isImage(): bool
+    {
+        return in_array($this->getExtension(), self::IMAGE_EXTENSIONS, true);
+    }
+
+    private function getExtension(): string
+    {
+        return strtolower(substr($this->path, strrpos($this->path, '.') + 1));
     }
 }

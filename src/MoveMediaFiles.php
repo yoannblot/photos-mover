@@ -8,8 +8,6 @@ use App\Type\Directory;
 
 final class MoveMediaFiles
 {
-    private const IMAGE_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg'];
-
     private Finder $finder;
     private ImageReader $reader;
     private Mover $mover;
@@ -24,7 +22,7 @@ final class MoveMediaFiles
     public function move(Directory $source, Directory $destination): void
     {
         error_log("Start moving files from '{$source->getPath()}' to {$destination->getPath()}'");
-        foreach ($this->finder->find($source, self::IMAGE_EXTENSIONS) as $file) {
+        foreach ($this->finder->find($source) as $file) {
             $newFilePath = $this->reader->getNewPath($destination, $file, 'Y/m/d');
             error_log("Will move '{$file->getPath()}' to $newFilePath'");
             $this->mover->move($file, $newFilePath);

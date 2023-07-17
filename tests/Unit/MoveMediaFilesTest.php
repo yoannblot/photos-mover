@@ -6,6 +6,7 @@ namespace Tests\Unit;
 
 use App\FileReader;
 use App\Finder;
+use App\Metadata\FileMetadataReader;
 use App\Metadata\ImageReader;
 use App\MoveMediaFiles;
 use App\Mover;
@@ -20,7 +21,7 @@ final class MoveMediaFilesTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->sut = new MoveMediaFiles(new Finder(), new FileReader(new ImageReader()), new Mover());
+        $this->sut = new MoveMediaFiles(new Finder(), new FileReader(new FileMetadataReader(new ImageReader())), new Mover());
     }
 
     #[Test]

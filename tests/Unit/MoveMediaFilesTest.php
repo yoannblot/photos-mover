@@ -9,6 +9,7 @@ use App\Finder;
 use App\Metadata\ImageReader;
 use App\MoveMediaFiles;
 use App\Mover;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
@@ -22,9 +23,7 @@ final class MoveMediaFilesTest extends TestCase
         $this->sut = new MoveMediaFiles(new Finder(), new FileReader(new ImageReader()), new Mover());
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function it_moves_an_image_based_on_its_metadata(): void
     {
         // Arrange

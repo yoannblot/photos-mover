@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Helper;
 
 use App\Type\Directory as DirectoryType;
+use App\Type\File;
 
 final class Fixtures
 {
@@ -12,7 +13,11 @@ final class Fixtures
 
     public static function duplicateImageIn(DirectoryType $destination): void
     {
-        $imagePath = self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.jpg';
-        copy($imagePath, $destination->getPath() . DIRECTORY_SEPARATOR . 'image.jpg');
+        copy(self::getImageFile()->getPath(), $destination->getPath() . DIRECTORY_SEPARATOR . 'image.jpg');
+    }
+
+    public static function getImageFile(): File
+    {
+        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.jpg');
     }
 }

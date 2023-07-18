@@ -21,7 +21,11 @@ final class MoveMediaFilesTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->sut = new MoveMediaFiles(new Finder(), new FileReader(new FileMetadataReader(new ImageReader())), new Mover());
+        $this->sut = new MoveMediaFiles(
+            new Finder(),
+            new FileReader(new FileMetadataReader(new ImageReader())),
+            new Mover()
+        );
     }
 
     #[Test]
@@ -36,10 +40,10 @@ final class MoveMediaFilesTest extends TestCase
         $this->sut->move($sourceDirectory, $destinationDirectory);
 
         // Assert
-        $expectedImagePath = $destinationDirectory->getPath()
-            . DIRECTORY_SEPARATOR . '2023'
-            . DIRECTORY_SEPARATOR . '07'
-            . DIRECTORY_SEPARATOR . '17'
+        $today = new \DateTimeImmutable();
+        $expectedImagePath = $destinationDirectory->getPath() . $today->format('Y')
+            . DIRECTORY_SEPARATOR . $today->format('m')
+            . DIRECTORY_SEPARATOR . $today->format('d')
             . DIRECTORY_SEPARATOR . 'image.jpg';
         $this->assertFileExists($expectedImagePath);
 

@@ -2,6 +2,7 @@
 
 use App\FileReader;
 use App\Finder;
+use App\Infrastructure\StdoutLogger;
 use App\Metadata\FileMetadataReader;
 use App\Metadata\ImageReader;
 use App\MoveMediaFiles;
@@ -19,6 +20,7 @@ if ($argc < 3) {
 $moveMediaFiles = new MoveMediaFiles(
     new Finder(),
     new FileReader(new FileMetadataReader(new ImageReader())),
-    new Mover()
+    new Mover(),
+    new StdoutLogger()
 );
 $moveMediaFiles->move(new Directory($sourceDirectory), new Directory($destinationDirectory));

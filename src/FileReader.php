@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App;
 
 use App\Metadata\FileMetadataReader;
-use App\Metadata\ImageReader;
 use App\Type\Directory;
 use App\Type\File;
 

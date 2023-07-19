@@ -12,6 +12,7 @@ use App\MoveMediaFiles;
 use App\Mover;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
 
@@ -24,7 +25,8 @@ final class MoveMediaFilesTest extends TestCase
         $this->sut = new MoveMediaFiles(
             new Finder(),
             new FileReader(new FileMetadataReader(new ImageReader())),
-            new Mover()
+            new Mover(),
+            new NullLogger(),
         );
     }
 

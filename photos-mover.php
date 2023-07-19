@@ -1,12 +1,12 @@
 <?php
 
 use App\Application\MoveMediaFiles;
-use App\Domain\FileReader;
 use App\Domain\Finder;
 use App\Domain\Metadata\FileMetadataReader;
-use App\Domain\Metadata\ImageReader;
 use App\Domain\Mover;
+use App\Domain\PathGenerator;
 use App\Domain\Type\Directory;
+use App\Infrastructure\Metadata\ExifMetadataReader;
 use App\Infrastructure\StdoutLogger;
 
 if ($argc < 3) {
@@ -20,7 +20,7 @@ if ($argc < 3) {
 $logger = new StdoutLogger();
 $moveMediaFiles = new MoveMediaFiles(
     new Finder(),
-    new FileReader(new FileMetadataReader(new ImageReader())),
+    new PathGenerator(new FileMetadataReader(new ExifMetadataReader())),
     new Mover($logger),
     $logger
 );

@@ -20,4 +20,9 @@ final class Fixtures
     {
         return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.jpg');
     }
+
+    public static function getVideoFile(): File
+    {
+        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'video.mp4');
+    }
 }

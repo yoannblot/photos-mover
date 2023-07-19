@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Tests\Unit\Application;
 
 use App\Application\MoveMediaFiles;
-use App\Domain\FileReader;
 use App\Domain\Finder;
 use App\Domain\Metadata\FileMetadataReader;
-use App\Domain\Metadata\ImageReader;
 use App\Domain\Mover;
+use App\Domain\PathGenerator;
+use App\Infrastructure\Metadata\ExifMetadataReader;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
@@ -25,7 +25,7 @@ final class MoveMediaFilesTest extends TestCase
         $logger = new NullLogger();
         $this->sut = new MoveMediaFiles(
             new Finder(),
-            new FileReader(new FileMetadataReader(new ImageReader())),
+            new PathGenerator(new FileMetadataReader(new ExifMetadataReader())),
             new Mover($logger),
             $logger,
         );

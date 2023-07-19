@@ -20,7 +20,7 @@ if ($argc < 3) {
 $logger = new StdoutLogger();
 $moveMediaFiles = new MoveMediaFiles(
     new Finder(),
-    new PathGenerator(new FileMetadataReader(new ExifMetadataReader())),
+    new PathGenerator(new FileMetadataReader([new ExifMetadataReader()])),
     new Mover($logger),
     $logger
 );

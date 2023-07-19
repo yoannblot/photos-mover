@@ -25,7 +25,11 @@ final class MoveMediaFilesTest extends TestCase
         $logger = new NullLogger();
         $this->sut = new MoveMediaFiles(
             new Finder(),
-            new PathGenerator(new FileMetadataReader(new ExifMetadataReader())),
+            new PathGenerator(
+                new FileMetadataReader([
+                    new ExifMetadataReader(),
+                ])
+            ),
             new Mover($logger),
             $logger,
         );

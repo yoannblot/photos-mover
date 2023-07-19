@@ -25,4 +25,9 @@ final class Fixtures
     {
         return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'video.mp4');
     }
+
+    public static function getTextFile(): File
+    {
+        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'text.txt');
+    }
 }

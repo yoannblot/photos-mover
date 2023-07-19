@@ -10,17 +10,25 @@ use App\Infrastructure\Metadata\ExifMetadataReader;
 
 final class FileMetadataReader
 {
-    private FileReader $imageReader;
+    /**
+     * @var ExifMetadataReader[]
+     */
+    private iterable $fileReaders;
 
-    public function __construct(ExifMetadataReader $imageReader)
+    /**
+     * @param ExifMetadataReader[] $fileReaders
+     */
+    public function __construct(iterable $fileReaders)
     {
-        $this->imageReader = $imageReader;
+        $this->fileReaders = $fileReaders;
     }
 
     public function extractMetadata(File $file): FileMetadata
     {
-        if ($this->imageReader->supports($file)) {
-            return $this->imageReader->extractMetadata($file);
+        foreach ($this->fileReaders as $fileReader) {
+            if ($fileReader->supports($file)) {
+                return $fileReader->extractMetadata($file);
+            }
         }
 
         throw new \InvalidArgumentException('Unsupported file type');

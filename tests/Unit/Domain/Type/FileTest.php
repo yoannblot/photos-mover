@@ -16,7 +16,7 @@ final class FileTest extends TestCase
     {
         // Assert
         $this->expectException(\InvalidArgumentException::class);
-        $this->expectExceptionMessage('File \'fake-path\' does not exist.');
+        $this->expectExceptionMessage("File 'fake-path' does not exist.");
 
         // Arrange & Act
         new File('fake-path');

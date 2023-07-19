@@ -2,9 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Application;
 
-use App\Type\Directory;
+use App\Domain\FileReader;
+use App\Domain\Finder;
+use App\Domain\Mover;
+use App\Domain\Type\Directory;
 use Psr\Log\LoggerInterface;
 
 final class MoveMediaFiles

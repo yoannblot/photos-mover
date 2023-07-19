@@ -10,6 +10,6 @@ final class StdoutLogger extends AbstractLogger
 {
     public function log($level, \Stringable|string $message, array $context = []): void
     {
-        error_log("[$level] $message" . PHP_EOL);
+        printf("[%s] %s" . PHP_EOL, $level, $message);
     }
 }

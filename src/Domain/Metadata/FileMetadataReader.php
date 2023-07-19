@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Metadata;
+namespace App\Domain\Metadata;
 
-use App\Type\File;
-use App\Type\FileMetadata;
+use App\Domain\Type\File;
+use App\Domain\Type\FileMetadata;
 
 final class FileMetadataReader
 {

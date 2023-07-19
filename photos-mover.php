@@ -1,13 +1,13 @@
 <?php
 
-use App\FileReader;
-use App\Finder;
+use App\Application\MoveMediaFiles;
+use App\Domain\FileReader;
+use App\Domain\Finder;
+use App\Domain\Metadata\FileMetadataReader;
+use App\Domain\Metadata\ImageReader;
+use App\Domain\Mover;
+use App\Domain\Type\Directory;
 use App\Infrastructure\StdoutLogger;
-use App\Metadata\FileMetadataReader;
-use App\Metadata\ImageReader;
-use App\MoveMediaFiles;
-use App\Mover;
-use App\Type\Directory;
 
 if ($argc < 3) {
     throw new InvalidArgumentException(

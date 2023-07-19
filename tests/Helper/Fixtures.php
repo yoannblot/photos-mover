@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Helper;
 
-use App\Type\Directory as DirectoryType;
-use App\Type\File;
+use App\Domain\Type\Directory as DirectoryType;
+use App\Domain\Type\File;
 
 final class Fixtures
 {

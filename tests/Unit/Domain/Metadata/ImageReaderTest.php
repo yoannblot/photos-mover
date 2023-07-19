@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit\Metadata;
+namespace Tests\Unit\Domain\Metadata;
 
-use App\Metadata\ImageReader;
+use App\Domain\Metadata\ImageReader;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Fixtures;

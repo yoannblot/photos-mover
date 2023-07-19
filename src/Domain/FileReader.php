@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Domain;
 
-use App\Metadata\FileMetadataReader;
-use App\Type\Directory;
-use App\Type\File;
+use App\Domain\Metadata\FileMetadataReader;
+use App\Domain\Type\Directory;
+use App\Domain\Type\File;
 
 final class FileReader
 {

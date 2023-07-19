@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Tests\Unit;
+namespace Tests\Unit\Application;
 
-use App\FileReader;
-use App\Finder;
-use App\Metadata\FileMetadataReader;
-use App\Metadata\ImageReader;
-use App\MoveMediaFiles;
-use App\Mover;
+use App\Application\MoveMediaFiles;
+use App\Domain\FileReader;
+use App\Domain\Finder;
+use App\Domain\Metadata\FileMetadataReader;
+use App\Domain\Metadata\ImageReader;
+use App\Domain\Mover;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;

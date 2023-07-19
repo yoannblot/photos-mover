@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace App\Domain;
 
-use App\Type\Directory;
-use App\Type\File;
+use App\Domain\Type\Directory;
+use App\Domain\Type\File;
 
 final class Finder
 {

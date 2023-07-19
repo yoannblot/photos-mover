@@ -17,10 +17,11 @@ if ($argc < 3) {
 
 [, $sourceDirectory, $destinationDirectory] = $argv;
 
+$logger = new StdoutLogger();
 $moveMediaFiles = new MoveMediaFiles(
     new Finder(),
     new FileReader(new FileMetadataReader(new ImageReader())),
-    new Mover(),
-    new StdoutLogger()
+    new Mover($logger),
+    $logger
 );
 $moveMediaFiles->move(new Directory($sourceDirectory), new Directory($destinationDirectory));

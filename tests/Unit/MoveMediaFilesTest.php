@@ -22,11 +22,12 @@ final class MoveMediaFilesTest extends TestCase
 
     protected function setUp(): void
     {
+        $logger = new NullLogger();
         $this->sut = new MoveMediaFiles(
             new Finder(),
             new FileReader(new FileMetadataReader(new ImageReader())),
-            new Mover(),
-            new NullLogger(),
+            new Mover($logger),
+            $logger,
         );
     }
 

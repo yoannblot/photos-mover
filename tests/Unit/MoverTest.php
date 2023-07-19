@@ -8,6 +8,7 @@ use App\Mover;
 use App\Type\File;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\NullLogger;
 
 final class MoverTest extends TestCase
 {
@@ -15,7 +16,7 @@ final class MoverTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->sut = new Mover();
+        $this->sut = new Mover(new NullLogger());
     }
 
     #[Test]

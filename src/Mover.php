@@ -5,18 +5,26 @@ declare(strict_types=1);
 namespace App;
 
 use App\Type\File;
+use Psr\Log\LoggerInterface;
 use RuntimeException;
 
 final class Mover
 {
+    private LoggerInterface $logger;
+
+    public function __construct(LoggerInterface $logger)
+    {
+        $this->logger = $logger;
+    }
+
     public function move(File $source, string $destinationPath): void
     {
         $this->createDirectoryIfNecessary($destinationPath);
 
         if (rename($source->getPath(), $destinationPath)) {
-            error_log("Move '{$source->getPath()}' to '$destinationPath'");
+            $this->logger->debug("Move '{$source->getPath()}' to '$destinationPath'");
         } else {
-            error_log("Unable to move '{$source->getPath()}' to '$destinationPath'");
+            $this->logger->error("Unable to move '{$source->getPath()}' to '$destinationPath'");
         }
     }
 

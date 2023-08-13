@@ -1,13 +1,8 @@
 <?php
 
 use App\Application\MoveMediaFiles;
-use App\Domain\Finder;
-use App\Domain\Metadata\FileMetadataReader;
-use App\Domain\Mover;
-use App\Domain\PathGenerator;
 use App\Domain\Type\Directory;
-use App\Infrastructure\Metadata\ExifMetadataReader;
-use App\Infrastructure\StdoutLogger;
+use App\Kernel;
 
 if ($argc < 3) {
     throw new InvalidArgumentException(
@@ -17,11 +12,7 @@ if ($argc < 3) {
 
 [, $sourceDirectory, $destinationDirectory] = $argv;
 
-$logger = new StdoutLogger();
-$moveMediaFiles = new MoveMediaFiles(
-    new Finder(),
-    new PathGenerator(new FileMetadataReader([new ExifMetadataReader()])),
-    new Mover($logger),
-    $logger
-);
+$app = new Kernel();
+$moveMediaFiles = $app->get(MoveMediaFiles::class);
+
 $moveMediaFiles->move(new Directory($sourceDirectory), new Directory($destinationDirectory));

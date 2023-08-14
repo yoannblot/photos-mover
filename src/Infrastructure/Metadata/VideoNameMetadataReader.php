@@ -17,10 +17,10 @@ final class VideoNameMetadataReader implements FileReader
 
     public function extractMetadata(File $file): FileMetadata
     {
-        preg_match('/VID([0-9]{14})/', $file->getFileName(), $matches);
+        preg_match('/VID[_]?([0-9]{14})/', $file->getFileName(), $matches);
 
         if (!array_key_exists(1, $matches)) {
-            throw new \LogicException('Unable to extract metadata from file name');
+            throw new \LogicException("Unable to extract metadata from file name '{$file->getFileName()}'");
         }
 
         return new FileMetadata(\DateTimeImmutable::createFromFormat('YmdHis', $matches[1]));

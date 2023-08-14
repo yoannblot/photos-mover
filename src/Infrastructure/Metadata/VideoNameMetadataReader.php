@@ -12,17 +12,19 @@ final class VideoNameMetadataReader implements FileReader
 {
     public function supports(File $file): bool
     {
-        return $file->isVideo() && str_starts_with($file->getFileName(), 'VID');
+        return $file->isVideo()
+            && (str_starts_with($file->getFileName(), 'VID')
+                || str_starts_with($file->getFileName(), 'WP'));
     }
 
     public function extractMetadata(File $file): FileMetadata
     {
-        preg_match('/VID[_]?([0-9]{14})/', $file->getFileName(), $matches);
+        preg_match('/[VIDWP][_-]?([0-9]{8})[_-]?/', $file->getFileName(), $matches);
 
-        if (!array_key_exists(1, $matches)) {
+        if (count($matches) < 1) {
             throw new \LogicException("Unable to extract metadata from file name '{$file->getFileName()}'");
         }
 
-        return new FileMetadata(\DateTimeImmutable::createFromFormat('YmdHis', $matches[1]));
+        return new FileMetadata(\DateTimeImmutable::createFromFormat('Ymd', $matches[1]));
     }
 }

@@ -16,7 +16,8 @@ final class StdoutLoggerTest extends TestCase
         $this->sut = new StdoutLogger();
     }
 
-    public function testItLogsAMessageToStdout(): void
+    /** @test */
+    public function it_logs_a_message_to_stdout(): void
     {
         // Arrange & Act
         $this->sut->log('error', 'this message');

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Unit\Infrastructure\Metadata;
 
 use App\Infrastructure\Metadata\ExifMetadataReader;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Fixtures;
 
@@ -18,7 +17,7 @@ final class ExifMetadataReaderTest extends TestCase
         $this->sut = new ExifMetadataReader();
     }
 
-    #[Test]
+    /** @test */
     public function it_does_not_support_a_video_file(): void
     {
         // Arrange
@@ -31,7 +30,7 @@ final class ExifMetadataReaderTest extends TestCase
         $this->assertFalse($isSupported);
     }
 
-    #[Test]
+    /** @test */
     public function it_supports_an_image(): void
     {
         // Arrange
@@ -44,7 +43,7 @@ final class ExifMetadataReaderTest extends TestCase
         $this->assertTrue($isSupported);
     }
 
-    #[Test]
+    /** @test */
     public function it_extracts_datetime(): void
     {
         // Arrange

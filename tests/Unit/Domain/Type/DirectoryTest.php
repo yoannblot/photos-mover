@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace Unit\Domain\Type;
 
 use App\Domain\Type\Directory;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 
 final class DirectoryTest extends TestCase
 {
-    #[Test]
+    /** @test */
     public function it_throws_an_invalid_argument_exception_when_directory_does_not_exist(): void
     {
         // Assert

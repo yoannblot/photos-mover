@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Unit\Domain\Type;
 
 use App\Domain\Type\File;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Fixtures;
 
 final class FileTest extends TestCase
 {
-    #[Test]
+    /** @test */
     public function it_throws_an_invalid_argument_exception_when_file_does_not_exist(): void
     {
         // Assert
@@ -22,7 +21,7 @@ final class FileTest extends TestCase
         new File('fake-path');
     }
 
-    #[Test]
+    /** @test */
     public function it_retrieves_directory_name(): void
     {
         // Arrange
@@ -35,7 +34,7 @@ final class FileTest extends TestCase
         $this->assertSame('text.txt', $directoryName);
     }
 
-    #[Test]
+    /** @test */
     public function it_returns_true_when_file_is_an_image(): void
     {
         // Arrange
@@ -48,7 +47,7 @@ final class FileTest extends TestCase
         $this->assertTrue($isImage);
     }
 
-    #[Test]
+    /** @test */
     public function it_returns_false_when_file_is_not_an_image(): void
     {
         // Arrange

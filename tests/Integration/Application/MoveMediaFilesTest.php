@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Integration\Application;
 
 use App\Application\MoveMediaFiles;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
 use Tests\Integration\IntegrationTestCase;
@@ -20,7 +19,7 @@ final class MoveMediaFilesTest extends IntegrationTestCase
         $this->sut = $this->app->get(MoveMediaFiles::class);
     }
 
-    #[Test]
+    /** @test */
     public function it_moves_an_image_based_on_its_metadata(): void
     {
         // Arrange

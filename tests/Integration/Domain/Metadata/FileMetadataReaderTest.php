@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Tests\Integration\Domain\Metadata;
 
 use App\Domain\Metadata\FileMetadataReader;
-use PHPUnit\Framework\Attributes\Test;
 use Tests\Helper\Fixtures;
 use Tests\Integration\IntegrationTestCase;
 
@@ -19,7 +18,7 @@ final class FileMetadataReaderTest extends IntegrationTestCase
         $this->sut = $this->app->get(FileMetadataReader::class);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_an_invalid_argument_exception_when_file_is_not_supported(): void
     {
         // Arrange
@@ -32,7 +31,7 @@ final class FileMetadataReaderTest extends IntegrationTestCase
         $this->sut->extractMetadata($file);
     }
 
-    #[Test]
+    /** @test */
     public function it_extracts_metadata_from_exif_for_an_image(): void
     {
         // Arrange

@@ -6,7 +6,6 @@ namespace Tests\Unit\Domain\Metadata;
 
 use App\Domain\Metadata\FileMetadataReader;
 use App\Infrastructure\Metadata\ExifMetadataReader;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Fixtures;
 
@@ -19,7 +18,7 @@ final class FileMetadataReaderTest extends TestCase
         $this->sut = new FileMetadataReader([new ExifMetadataReader()]);
     }
 
-    #[Test]
+    /** @test */
     public function it_throws_an_invalid_argument_exception_when_file_is_not_supported(): void
     {
         // Arrange
@@ -32,7 +31,7 @@ final class FileMetadataReaderTest extends TestCase
         $this->sut->extractMetadata($file);
     }
 
-    #[Test]
+    /** @test */
     public function it_extracts_metadata_from_exif_for_an_image(): void
     {
         // Arrange

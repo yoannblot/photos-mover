@@ -1,5 +1,7 @@
 <?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
 use App\Application\MoveMediaFiles;
 use App\Domain\Type\Directory;
 use App\Kernel;

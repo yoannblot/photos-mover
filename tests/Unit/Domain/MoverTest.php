@@ -6,7 +6,6 @@ namespace Tests\Unit\Domain;
 
 use App\Domain\Mover;
 use App\Domain\Type\File;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 
@@ -19,7 +18,7 @@ final class MoverTest extends TestCase
         $this->sut = new Mover(new NullLogger());
     }
 
-    #[Test]
+    /** @test */
     public function it_creates_the_destination_directory_if_it_does_not_exist(): void
     {
         // Arrange
@@ -36,7 +35,7 @@ final class MoverTest extends TestCase
         rmdir(dirname($destinationPath));
     }
 
-    #[Test]
+    /** @test */
     public function it_moves_a_file_into_a_directory(): void
     {
         // Arrange

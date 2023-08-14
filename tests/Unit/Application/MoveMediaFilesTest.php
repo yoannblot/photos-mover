@@ -10,7 +10,6 @@ use App\Domain\Metadata\FileMetadataReader;
 use App\Domain\Mover;
 use App\Domain\PathGenerator;
 use App\Infrastructure\Metadata\ExifMetadataReader;
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\NullLogger;
 use Tests\Helper\Directory as DirectoryHelper;
@@ -35,7 +34,7 @@ final class MoveMediaFilesTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_moves_an_image_based_on_its_metadata(): void
     {
         // Arrange

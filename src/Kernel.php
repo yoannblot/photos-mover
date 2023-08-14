@@ -10,6 +10,7 @@ use App\Domain\Metadata\FileMetadataReader;
 use App\Domain\Mover;
 use App\Domain\PathGenerator;
 use App\Infrastructure\Metadata\ExifMetadataReader;
+use App\Infrastructure\Metadata\VideoNameMetadataReader;
 use App\Infrastructure\StdoutLogger;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -25,7 +26,7 @@ final class Kernel
         $this->container->register(LoggerInterface::class, StdoutLogger::class);
         $this->container
             ->register(FileMetadataReader::class, FileMetadataReader::class)
-            ->addArgument([new ExifMetadataReader()]);
+            ->addArgument([new ExifMetadataReader(), new VideoNameMetadataReader()]);
         $this->container->register(Finder::class, Finder::class);
         $this->container->register(PathGenerator::class, PathGenerator::class)
             ->addArgument($this->container->get(FileMetadataReader::class));

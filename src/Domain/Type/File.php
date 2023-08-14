@@ -32,9 +32,19 @@ final class File
         return $this->path;
     }
 
+    public function getFileName(): string
+    {
+        return basename($this->path);
+    }
+
     public function isImage(): bool
     {
         return in_array($this->getExtension(), self::IMAGE_EXTENSIONS, true);
+    }
+
+    public function isVideo(): bool
+    {
+        return $this->getExtension() === 'mp4';
     }
 
     private function getExtension(): string

@@ -12,7 +12,9 @@ final class Directory
     {
         $directoryPath = __DIR__ . DIRECTORY_SEPARATOR . $directoryName;
 
-        mkdir($directoryPath, 0777, true);
+        if (!is_dir($directoryPath)) {
+            mkdir($directoryPath, 0777, true);
+        }
 
         return new DirectoryType($directoryPath);
     }

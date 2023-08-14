@@ -42,4 +42,27 @@ final class MoveMediaFilesTest extends IntegrationTestCase
         DirectoryHelper::remove($destinationDirectory);
         DirectoryHelper::remove($sourceDirectory);
     }
+
+    /** @test */
+    public function it_moves_a_video_based_on_its_metadata(): void
+    {
+        // Arrange
+        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
+        $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
+        Fixtures::duplicateVideoIn($sourceDirectory);
+
+        // Act
+        $this->sut->move($sourceDirectory, $destinationDirectory);
+
+        // Assert
+        $expectedVideoPath = $destinationDirectory->getPath() . '2023'
+            . DIRECTORY_SEPARATOR . '07'
+            . DIRECTORY_SEPARATOR . '31'
+            . DIRECTORY_SEPARATOR . 'VID20230731221612.mp4';
+        $this->assertFileExists($expectedVideoPath);
+
+        unlink($expectedVideoPath);
+        DirectoryHelper::remove($destinationDirectory);
+        DirectoryHelper::remove($sourceDirectory);
+    }
 }

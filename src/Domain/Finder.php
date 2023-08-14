@@ -17,7 +17,7 @@ final class Finder
         return array_filter(
             array_map(static function (string $path): ?File {
                 $file = new File($path);
-                if (!$file->isImage()) {
+                if (!$file->isImage() && !$file->isVideo()) {
                     return null;
                 }
 

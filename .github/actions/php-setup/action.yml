@@ -1,0 +1,28 @@
+name: 'PHP Setup'
+description: 'Setup everything for PHP'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Get composer cache directory
+      id: composer-cache
+      run: echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ steps.composer-cache.outputs.dir }}
+        key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
+        restore-keys: ${{ runner.os }}-composer-
+
+    - name: Install PHP
+      uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
+      with:
+        php-version: '8.0'
+        coverage: false
+
+    - name: Install PHP dependencies
+      run: |
+        composer install --no-interaction --no-progress
+      shell: bash

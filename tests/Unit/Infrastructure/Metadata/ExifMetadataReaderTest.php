@@ -6,6 +6,7 @@ namespace Tests\Unit\Infrastructure\Metadata;
 
 use App\Infrastructure\Metadata\ExifMetadataReader;
 use PHPUnit\Framework\TestCase;
+use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
 
 final class ExifMetadataReaderTest extends TestCase
@@ -47,12 +48,16 @@ final class ExifMetadataReaderTest extends TestCase
     public function it_extracts_datetime(): void
     {
         // Arrange
-        $file = Fixtures::getImageFile();
+        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
+        $file = Fixtures::createImageFile($sourceDirectory);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);
 
         // Assert
-        $this->assertSame('2023-06-12 16:24:17', $metadata->getDate()->format('Y-m-d H:i:s'));
+        $now = new \DateTimeImmutable();
+        $this->assertSame($now->format('Y-m-d'), $metadata->getDate()->format('Y-m-d'));
+        unlink($file->getPath());
+        DirectoryHelper::remove($sourceDirectory);
     }
 }

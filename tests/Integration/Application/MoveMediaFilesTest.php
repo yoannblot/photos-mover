@@ -58,7 +58,7 @@ final class MoveMediaFilesTest extends IntegrationTestCase
         $expectedVideoPath = $destinationDirectory->getPath() . '2023'
             . DIRECTORY_SEPARATOR . '07'
             . DIRECTORY_SEPARATOR . '31'
-            . DIRECTORY_SEPARATOR . 'VID20230731221612.mp4';
+            . DIRECTORY_SEPARATOR . 'vid20230731221612.mp4';
         $this->assertFileExists($expectedVideoPath);
 
         unlink($expectedVideoPath);

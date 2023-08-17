@@ -24,6 +24,14 @@ final class Fixtures
         );
     }
 
+    public static function createImageFile(DirectoryType $destination): File
+    {
+        $imagePath = $destination->getPath() . DIRECTORY_SEPARATOR . 'image.jpg';
+        copy(self::getImageFile()->getPath(), $imagePath);
+
+        return new File($imagePath);
+    }
+
     public static function getImageFile(): File
     {
         return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.jpg');

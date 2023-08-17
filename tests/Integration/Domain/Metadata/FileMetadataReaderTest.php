@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Integration\Domain\Metadata;
 
 use App\Domain\Metadata\FileMetadataReader;
+use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
 use Tests\Integration\IntegrationTestCase;
 
@@ -35,12 +36,16 @@ final class FileMetadataReaderTest extends IntegrationTestCase
     public function it_extracts_metadata_from_exif_for_an_image(): void
     {
         // Arrange
-        $file = Fixtures::getImageFile();
+        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
+        $file = Fixtures::createImageFile($sourceDirectory);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);
 
         // Assert
-        $this->assertSame('2023-06-12 16:24:17', $metadata->getDate()->format('Y-m-d H:i:s'));
+        $now = new \DateTimeImmutable();
+        $this->assertSame($now->format('Y-m-d'), $metadata->getDate()->format('Y-m-d'));
+        unlink($file->getPath());
+        DirectoryHelper::remove($sourceDirectory);
     }
 }

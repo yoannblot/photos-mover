@@ -27,8 +27,9 @@ final class MoveMediaFiles
 
     public function move(Directory $source, Directory $destination): void
     {
-        $this->logger->info("Start moving files from '{$source->getPath()}' to {$destination->getPath()}'");
+        $this->logger->info("Start moving files from '{$source->getPath()}' to '{$destination->getPath()}'");
         foreach ($this->finder->find($source) as $file) {
+            $this->logger->debug("Check for '{$file->getPath()}'");
             $newFilePath = $this->pathGenerator->generate($destination, $file);
             $this->logger->info("Will move '{$file->getPath()}' to $newFilePath'");
             $this->mover->move($file, $newFilePath);

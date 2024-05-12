@@ -11,9 +11,14 @@ final class Fixtures
 {
     private const FIXTURES_DIRECTORY = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fixtures';
 
-    public static function duplicateImageIn(DirectoryType $destination): void
+    public static function duplicateJpgImageIn(DirectoryType $destination): void
     {
-        copy(self::getImageFile()->getPath(), $destination->getPath() . DIRECTORY_SEPARATOR . 'image.jpg');
+        copy(self::getJpgImageFile()->getPath(), $destination->getPath() . DIRECTORY_SEPARATOR . 'image.jpg');
+    }
+
+    public static function duplicatePngImageIn(DirectoryType $destination): void
+    {
+        copy(self::getPngImageFile()->getPath(), $destination->getPath() . DIRECTORY_SEPARATOR . 'image.png');
     }
 
     public static function duplicateVideoIn(DirectoryType $destination): void
@@ -24,17 +29,30 @@ final class Fixtures
         );
     }
 
-    public static function createImageFile(DirectoryType $destination): File
+    public static function createJpgImageFile(DirectoryType $destination): File
     {
         $imagePath = $destination->getPath() . DIRECTORY_SEPARATOR . 'image.jpg';
-        copy(self::getImageFile()->getPath(), $imagePath);
+        copy(self::getJpgImageFile()->getPath(), $imagePath);
 
         return new File($imagePath);
     }
 
-    public static function getImageFile(): File
+    public static function createPngImageFile(DirectoryType $destination): File
+    {
+        $imagePath = $destination->getPath() . DIRECTORY_SEPARATOR . 'image.png';
+        copy(self::getPngImageFile()->getPath(), $imagePath);
+
+        return new File($imagePath);
+    }
+
+    public static function getJpgImageFile(): File
     {
         return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.jpg');
+    }
+
+    public static function getPngImageFile(): File
+    {
+        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.png');
     }
 
     public static function getVideoFile(): File

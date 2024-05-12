@@ -38,7 +38,7 @@ final class FileTest extends TestCase
     public function it_returns_true_when_file_is_an_image(): void
     {
         // Arrange
-        $file = new File(Fixtures::getImageFile()->getPath());
+        $file = new File(Fixtures::getJpgImageFile()->getPath());
 
         // Act
         $isImage = $file->isImage();

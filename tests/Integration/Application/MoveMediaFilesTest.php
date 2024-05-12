@@ -20,12 +20,12 @@ final class MoveMediaFilesTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function it_moves_an_image_based_on_its_metadata(): void
+    public function it_moves_a_jpg_image_based_on_its_metadata(): void
     {
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
         $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
-        Fixtures::duplicateImageIn($sourceDirectory);
+        Fixtures::duplicateJpgImageIn($sourceDirectory);
 
         // Act
         $this->sut->move($sourceDirectory, $destinationDirectory);
@@ -36,6 +36,30 @@ final class MoveMediaFilesTest extends IntegrationTestCase
             . DIRECTORY_SEPARATOR . $today->format('m')
             . DIRECTORY_SEPARATOR . $today->format('d')
             . DIRECTORY_SEPARATOR . 'image.jpg';
+        $this->assertFileExists($expectedImagePath);
+
+        unlink($expectedImagePath);
+        DirectoryHelper::remove($destinationDirectory);
+        DirectoryHelper::remove($sourceDirectory);
+    }
+
+    /** @test */
+    public function it_moves_a_png_image_based_on_its_metadata(): void
+    {
+        // Arrange
+        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
+        $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
+        Fixtures::duplicatePngImageIn($sourceDirectory);
+
+        // Act
+        $this->sut->move($sourceDirectory, $destinationDirectory);
+
+        // Assert
+        $today = new \DateTimeImmutable();
+        $expectedImagePath = $destinationDirectory->getPath() . $today->format('Y')
+            . DIRECTORY_SEPARATOR . $today->format('m')
+            . DIRECTORY_SEPARATOR . $today->format('d')
+            . DIRECTORY_SEPARATOR . 'image.png';
         $this->assertFileExists($expectedImagePath);
 
         unlink($expectedImagePath);

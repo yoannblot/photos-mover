@@ -37,7 +37,7 @@ final class FileMetadataReaderTest extends TestCase
     {
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $file = Fixtures::createImageFile($sourceDirectory);
+        $file = Fixtures::createJpgImageFile($sourceDirectory);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);

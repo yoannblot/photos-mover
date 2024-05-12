@@ -32,7 +32,7 @@ final  class VideoNameMetadataReaderTest extends TestCase
     public function it_does_not_support_an_image_file(): void
     {
         // Arrange
-        $file = Fixtures::getImageFile();
+        $file = Fixtures::getJpgImageFile();
 
         // Act
         $isSupported = $this->sut->supports($file);

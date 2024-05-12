@@ -32,10 +32,23 @@ final class ExifMetadataReaderTest extends TestCase
     }
 
     /** @test */
-    public function it_supports_an_image(): void
+    public function it_does_not_support_a_png_image(): void
     {
         // Arrange
-        $file = Fixtures::getImageFile();
+        $file = Fixtures::getPngImageFile();
+
+        // Act
+        $isSupported = $this->sut->supports($file);
+
+        // Assert
+        $this->assertFalse($isSupported);
+    }
+
+    /** @test */
+    public function it_supports_a_jpg_image(): void
+    {
+        // Arrange
+        $file = Fixtures::getJpgImageFile();
 
         // Act
         $isSupported = $this->sut->supports($file);
@@ -49,7 +62,7 @@ final class ExifMetadataReaderTest extends TestCase
     {
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $file = Fixtures::createImageFile($sourceDirectory);
+        $file = Fixtures::createJpgImageFile($sourceDirectory);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);

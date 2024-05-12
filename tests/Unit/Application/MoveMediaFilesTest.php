@@ -40,7 +40,7 @@ final class MoveMediaFilesTest extends TestCase
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
         $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
-        Fixtures::duplicateImageIn($sourceDirectory);
+        Fixtures::duplicateJpgImageIn($sourceDirectory);
 
         // Act
         $this->sut->move($sourceDirectory, $destinationDirectory);

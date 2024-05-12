@@ -9,17 +9,16 @@ use App\Domain\Type\File;
 use App\Domain\Type\FileMetadata;
 use DateTimeImmutable;
 
-final class ExifMetadataReader implements FileReader
+final class DefaultFileMetadataReader implements FileReader
 {
     public function supports(File $file): bool
     {
-        return $file->isImage() && exif_imagetype($file->getPath()) === IMAGETYPE_JPEG;
+        return $file->isImage() || $file->isVideo();
     }
 
     public function extractMetadata(File $file): FileMetadata
     {
-        $exifData = exif_read_data($file->getPath());
-        $timestamp = $exifData['FileDateTime'];
+        $timestamp = filemtime($file->getPath());
 
         return new FileMetadata(DateTimeImmutable::createFromFormat('U', (string) $timestamp));
     }

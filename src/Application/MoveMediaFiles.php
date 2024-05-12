@@ -30,9 +30,13 @@ final class MoveMediaFiles
         $this->logger->info("Start moving files from '{$source->getPath()}' to '{$destination->getPath()}'");
         foreach ($this->finder->find($source) as $file) {
             $this->logger->debug("Check for '{$file->getPath()}'");
-            $newFilePath = $this->pathGenerator->generate($destination, $file);
-            $this->logger->info("Will move '{$file->getPath()}' to $newFilePath'");
-            $this->mover->move($file, $newFilePath);
+            try {
+                $newFilePath = $this->pathGenerator->generate($destination, $file);
+                $this->logger->info("Will move '{$file->getPath()}' to $newFilePath'");
+                $this->mover->move($file, $newFilePath);
+            } catch (\InvalidArgumentException $e) {
+                $this->logger->warning("Unable to move file: '{$file->getPath()}'");
+            }
         }
     }
 }

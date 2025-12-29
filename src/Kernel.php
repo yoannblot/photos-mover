@@ -14,34 +14,52 @@ use App\Infrastructure\Metadata\ExifMetadataReader;
 use App\Infrastructure\Metadata\VideoNameMetadataReader;
 use App\Infrastructure\StdoutLogger;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-final class Kernel
+final readonly class Kernel
 {
-    private ContainerBuilder $container;
+    private ContainerBuilder $containerBuilder;
 
     public function __construct()
     {
-        $this->container = new ContainerBuilder();
+        $this->containerBuilder = new ContainerBuilder();
 
-        $this->container->register(LoggerInterface::class, StdoutLogger::class);
-        $this->container
+        $this->containerBuilder->register(LoggerInterface::class, StdoutLogger::class);
+        $this->containerBuilder
             ->register(FileMetadataReader::class, FileMetadataReader::class)
             ->addArgument([new ExifMetadataReader(), new VideoNameMetadataReader(), new DefaultFileMetadataReader()]);
-        $this->container->register(Finder::class, Finder::class);
-        $this->container->register(PathGenerator::class, PathGenerator::class)
-            ->addArgument($this->container->get(FileMetadataReader::class));
-        $this->container->register(Mover::class, Mover::class)
-            ->addArgument($this->container->get(LoggerInterface::class));
-        $this->container->register(MoveMediaFiles::class, MoveMediaFiles::class)
-            ->addArgument($this->container->get(Finder::class))
-            ->addArgument($this->container->get(PathGenerator::class))
-            ->addArgument($this->container->get(Mover::class))
-            ->addArgument($this->container->get(LoggerInterface::class));
+        $this->containerBuilder->register(Finder::class, Finder::class);
+        $this->containerBuilder
+            ->register(PathGenerator::class, PathGenerator::class)
+            ->addArgument($this->containerBuilder->get(FileMetadataReader::class));
+        $this->containerBuilder
+            ->register(Mover::class, Mover::class)
+            ->addArgument($this->containerBuilder->get(LoggerInterface::class));
+        $this->containerBuilder
+            ->register(MoveMediaFiles::class, MoveMediaFiles::class)
+            ->addArgument($this->containerBuilder->get(Finder::class))
+            ->addArgument($this->containerBuilder->get(PathGenerator::class))
+            ->addArgument($this->containerBuilder->get(Mover::class))
+            ->addArgument($this->containerBuilder->get(LoggerInterface::class));
     }
 
-    public function get(string $id): ?object
+    /**
+     * @template T of object
+     * @param class-string<T> $id
+     *
+     * @return T
+     * @throws RuntimeException
+     */
+    public function get(string $id): mixed
     {
-        return $this->container->get($id);
+        /** @var T|null $service */
+        $service = $this->containerBuilder->get($id);
+        if ($service === null)
+        {
+            throw new RuntimeException(sprintf('Service not found %s', $id));
+        }
+
+        return $service;
     }
 }

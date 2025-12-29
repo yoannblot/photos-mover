@@ -9,7 +9,7 @@ use App\Domain\Type\FileMetadata;
 
 interface FileReader
 {
-    public function supports(File $file): bool;
-
     public function extractMetadata(File $file): FileMetadata;
+
+    public function supports(File $file): bool;
 }

@@ -10,16 +10,16 @@ runs:
       shell: bash
 
     - name: Cache dependencies
-      uses: actions/cache@v3
+      uses: actions/cache@v5
       with:
         path: ${{ steps.composer-cache.outputs.dir }}
         key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
         restore-keys: ${{ runner.os }}-composer-
 
     - name: Install PHP
-      uses: shivammathur/setup-php@e04e1d97f0c0481c6e1ba40f8a538454fe5d7709
+      uses: shivammathur/setup-php@v2
       with:
-        php-version: '8.0'
+        php-version: '8.4'
         coverage: false
 
     - name: Install PHP dependencies

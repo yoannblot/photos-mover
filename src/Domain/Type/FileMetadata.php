@@ -6,14 +6,11 @@ namespace App\Domain\Type;
 
 use DateTimeImmutable;
 
-final class FileMetadata
+final readonly class FileMetadata
 {
-    private DateTimeImmutable $date;
-
-    public function __construct(DateTimeImmutable $date)
-    {
-        $this->date = $date;
-    }
+    public function __construct(
+        private DateTimeImmutable $date,
+    ) {}
 
     public function getDate(): DateTimeImmutable
     {

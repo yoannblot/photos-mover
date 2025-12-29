@@ -4,19 +4,22 @@ declare(strict_types=1);
 
 namespace App\Domain\Type;
 
-final class File
+use InvalidArgumentException;
+
+final readonly class File
 {
-    private const IMAGE_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg'];
+    private const array IMAGE_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg'];
 
     private string $path;
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(string $path)
     {
-        if (!file_exists($path)) {
-            throw new \InvalidArgumentException("File '$path' does not exist.");
+        if (!file_exists($path))
+        {
+            throw new InvalidArgumentException(sprintf("File '%s' does not exist.", $path));
         }
 
         $this->path = $path;
@@ -27,14 +30,14 @@ final class File
         return basename($this->path);
     }
 
-    public function getPath(): string
-    {
-        return $this->path;
-    }
-
     public function getFileName(): string
     {
         return basename($this->path);
+    }
+
+    public function getPath(): string
+    {
+        return $this->path;
     }
 
     public function isImage(): bool
@@ -49,6 +52,12 @@ final class File
 
     private function getExtension(): string
     {
-        return strtolower(substr($this->path, strrpos($this->path, '.') + 1));
+        $dotPosition = strrpos($this->path, '.');
+        if ($dotPosition === false)
+        {
+            return '';
+        }
+
+        return strtolower(substr($this->path, $dotPosition + 1));
     }
 }

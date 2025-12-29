@@ -1,0 +1,53 @@
+php-version = "8.4"
+
+[source]
+workspace = "."
+paths = ["src", "tests"]
+includes = ["vendor"]
+excludes = ["cache/**", "vendor/**"]
+extensions = ["php"]
+
+[formatter]
+print-width = 120
+tab-width = 4
+use-tabs = false
+align-assignment-like = true
+always-break-named-arguments-list = true
+always-break-attribute-named-argument-lists = true
+first-method-chain-on-new-line = true
+preserve-breaking-member-access-chain = true
+sort-class-methods = true
+control-brace-style = "NextLine"
+
+[linter]
+integrations = ["phpunit"]
+
+[linter.rules]
+assertion-style = { style = "$this" }
+no-boolean-flag-parameter = { level = "Error" }
+no-boolean-literal-comparison = { level = "Error" }
+return-type = { level = "Error" }
+parameter-type = { level = "Error" }
+property-type = { level = "Error" }
+variable-name = { level = "Error" }
+property-name = { level = "Error" }
+require-namespace = { level = "Error" }
+yoda-conditions = { level = "Error" }
+readable-literal = { level = "Error", min-digits = 5 }
+halstead = { effort-threshold = 3000 }
+cyclomatic-complexity = { threshold = 10 }
+excessive-nesting = { threshold = 5 }
+too-many-methods = { threshold = 8 }
+too-many-properties = { threshold = 8 }
+
+[analyzer]
+analyze-dead-code = true
+find-unused-parameters = true
+strict-list-index-checks = true
+no-boolean-literal-comparison = true
+check-missing-type-hints = true
+check-closure-missing-type-hints = true
+check-arrow-function-missing-type-hints = true
+check-property-initialization = true
+check-use-statements = true
+class-initializers = ["setUp"]

@@ -6,31 +6,20 @@ on:
       - 'master'
 
 jobs:
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-20.04
+  tests:
+    name: Tests
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v6
 
       - name: PHP Setup
         uses: ./.github/actions/php-setup
 
-      - name: Run tests
+      - name: Run Unit tests
         run: ./vendor/bin/phpunit --testsuite "unit"
         shell: bash
 
-  integration-tests:
-    needs: unit-tests
-    name: Integration Tests
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: PHP Setup
-        uses: ./.github/actions/php-setup
-
-      - name: Run tests
+      - name: Run Integration tests
         run: ./vendor/bin/phpunit --testsuite "integration"
         shell: bash

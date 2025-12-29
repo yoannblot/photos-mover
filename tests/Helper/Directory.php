@@ -12,22 +12,33 @@ final class Directory
     {
         $directoryPath = __DIR__ . DIRECTORY_SEPARATOR . $directoryName;
 
-        if (!is_dir($directoryPath)) {
-            mkdir($directoryPath, 0705, true);
+        if (!is_dir($directoryPath))
+        {
+            mkdir($directoryPath, 0o705, true);
         }
 
         return new DirectoryType($directoryPath);
     }
 
-    public static function remove(DirectoryType $directory): void
+    public static function remove(DirectoryType $directoryType): void
     {
-        foreach (glob($directory->getPath() . '*', GLOB_MARK) as $path) {
-            if (is_dir($path)) {
-                self::remove(new DirectoryType($path));
-            } else {
-                unlink($path);
+        $files = glob($directoryType->getPath() . '*', GLOB_MARK);
+        if ($files === false)
+        {
+            return;
+        }
+
+        foreach ($files as $file)
+        {
+            if (is_dir($file))
+            {
+                self::remove(new DirectoryType($file));
+            } else
+            {
+                unlink($file);
             }
         }
-        rmdir($directory->getPath());
+
+        rmdir($directoryType->getPath());
     }
 }

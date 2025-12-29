@@ -11,18 +11,17 @@ final class StdoutLoggerTest extends TestCase
 {
     private StdoutLogger $sut;
 
-    protected function setUp(): void
-    {
-        $this->sut = new StdoutLogger();
-    }
-
-    /** @test */
-    public function it_logs_a_message_to_stdout(): void
+    public function test_it_logs_a_message_to_stdout(): void
     {
         // Arrange & Act
         $this->sut->log('error', 'this message');
 
         // Assert
         $this->expectOutputString('[error] this message' . PHP_EOL);
+    }
+
+    protected function setUp(): void
+    {
+        $this->sut = new StdoutLogger();
     }
 }

@@ -7,30 +7,29 @@ namespace App\Domain\Metadata;
 use App\Domain\Type\File;
 use App\Domain\Type\FileMetadata;
 use App\Infrastructure\Metadata\ExifMetadataReader;
+use InvalidArgumentException;
 
-final class FileMetadataReader
+final readonly class FileMetadataReader
 {
-    /**
-     * @var ExifMetadataReader[]
-     */
-    private iterable $fileReaders;
-
     /**
      * @param ExifMetadataReader[] $fileReaders
      */
-    public function __construct(iterable $fileReaders)
-    {
-        $this->fileReaders = $fileReaders;
-    }
+    public function __construct(
+        private iterable $fileReaders,
+    ) {}
 
     public function extractMetadata(File $file): FileMetadata
     {
-        foreach ($this->fileReaders as $fileReader) {
-            if ($fileReader->supports($file)) {
-                return $fileReader->extractMetadata($file);
+        foreach ($this->fileReaders as $fileReader)
+        {
+            if (!$fileReader->supports($file))
+            {
+                continue;
             }
+
+            return $fileReader->extractMetadata($file);
         }
 
-        throw new \InvalidArgumentException('Unsupported file type');
+        throw new InvalidArgumentException('Unsupported file type');
     }
 }

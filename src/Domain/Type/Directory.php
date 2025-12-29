@@ -4,20 +4,24 @@ declare(strict_types=1);
 
 namespace App\Domain\Type;
 
-final class Directory
+use InvalidArgumentException;
+
+final readonly class Directory
 {
     private string $path;
 
     /**
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     public function __construct(string $path)
     {
-        if (!is_dir($path)) {
-            throw new \InvalidArgumentException("Given directory '$path' is not a directory.");
+        if (!is_dir($path))
+        {
+            throw new InvalidArgumentException(sprintf("Given directory '%s' is not a directory.", $path));
         }
 
-        if (false === strpos($path, DIRECTORY_SEPARATOR, -1)) {
+        if (!str_contains(substr($path, -1), DIRECTORY_SEPARATOR))
+        {
             $path .= DIRECTORY_SEPARATOR;
         }
 

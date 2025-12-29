@@ -6,33 +6,45 @@ namespace Tests\Unit\Infrastructure\Metadata;
 
 use App\Domain\Type\File;
 use App\Infrastructure\Metadata\DefaultFileMetadataReader;
+use DateTimeImmutable;
+use Iterator;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Directory as DirectoryHelper;
 use Tests\Helper\Fixtures;
 
 final class DefaultFileMetadataReaderTest extends TestCase
 {
-    public static function fileDataProvider(): array
+    /**
+     * @return Iterator<string, array<File>>
+     */
+    public static function fileDataProvider(): Iterator
     {
-        return [
-            'jpg' => [Fixtures::getJpgImageFile()],
-            'png' => [Fixtures::getPngImageFile()],
-            'mp4' => [Fixtures::getVideoFile()],
-        ];
+        yield 'jpg' => [Fixtures::getJpgImageFile()];
+        yield 'png' => [Fixtures::getPngImageFile()];
+        yield 'mp4' => [Fixtures::getVideoFile()];
     }
 
     private DefaultFileMetadataReader $sut;
 
-    protected function setUp(): void
+    public function test_it_extracts_datetime(): void
     {
-        $this->sut = new DefaultFileMetadataReader();
+        // Arrange
+        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
+        $file            = Fixtures::createPngImageFile($sourceDirectory);
+
+        // Act
+        $metadata = $this->sut->extractMetadata($file);
+
+        // Assert
+        $now = new DateTimeImmutable();
+        $this->assertSame($now->format('Y-m-d'), $metadata->getDate()->format('Y-m-d'));
+        unlink($file->getPath());
+        DirectoryHelper::remove($sourceDirectory);
     }
 
-    /**
-     * @test
-     * @dataProvider fileDataProvider
-     */
-    public function it_supports_everything(File $file): void
+    #[DataProvider('fileDataProvider')]
+    public function test_it_supports_everything(File $file): void
     {
         // Act
         $isSupported = $this->sut->supports($file);
@@ -41,20 +53,8 @@ final class DefaultFileMetadataReaderTest extends TestCase
         $this->assertTrue($isSupported);
     }
 
-    /** @test */
-    public function it_extracts_datetime(): void
+    protected function setUp(): void
     {
-        // Arrange
-        $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $file = Fixtures::createPngImageFile($sourceDirectory);
-
-        // Act
-        $metadata = $this->sut->extractMetadata($file);
-
-        // Assert
-        $now = new \DateTimeImmutable();
-        $this->assertSame($now->format('Y-m-d'), $metadata->getDate()->format('Y-m-d'));
-        unlink($file->getPath());
-        DirectoryHelper::remove($sourceDirectory);
+        $this->sut = new DefaultFileMetadataReader();
     }
 }

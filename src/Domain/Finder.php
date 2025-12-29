@@ -14,17 +14,22 @@ final class Finder
      */
     public function find(Directory $directory): array
     {
-        return array_values(
-            array_filter(
-                array_map(static function (string $path): ?File {
-                    $file = new File($path);
-                    if (!$file->isImage() && !$file->isVideo()) {
-                        return null;
-                    }
+        $all = glob($directory->getPath() . '*', GLOB_NOSORT);
+        if ($all === false)
+        {
+            return [];
+        }
 
-                    return $file;
-                }, glob($directory->getPath() . '*', GLOB_NOSORT)),
-            )
-        );
+        $result = [];
+        foreach ($all as $path)
+        {
+            $file = new File($path);
+            if ($file->isImage() || $file->isVideo())
+            {
+                $result[] = $file;
+            }
+        }
+
+        return $result;
     }
 }

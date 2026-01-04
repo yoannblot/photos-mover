@@ -7,6 +7,7 @@ namespace Tests\Helper;
 use App\Domain\Type\Directory as DirectoryType;
 use App\Domain\Type\File;
 use App\Domain\Type\ImageExtension;
+use App\Domain\Type\VideoExtension;
 
 final class Fixtures
 {
@@ -27,12 +28,18 @@ final class Fixtures
         copy($sourceFile, $directoryType->getPath() . DIRECTORY_SEPARATOR . ('image.' . $imageExtension->value));
     }
 
-    public static function duplicateVideoIn(DirectoryType $directoryType): void
+    public static function duplicateVideoIn(DirectoryType $directoryType, VideoExtension $videoExtension): void
     {
+        $sourceFile = self::getVideoFile($videoExtension)->getPath();
         copy(
-            self::getVideoFileWithDateTimeInName()->getPath(),
-            $directoryType->getPath() . DIRECTORY_SEPARATOR . self::getVideoFileWithDateTimeInName()->getFileName(),
+            $sourceFile,
+            $directoryType->getPath() . DIRECTORY_SEPARATOR . self::getVideoFile($videoExtension)->getFileName(),
         );
+    }
+
+    public static function getGenericVideoFile(): File
+    {
+        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'video.mp4');
     }
 
     public static function getImageFile(ImageExtension $imageExtension): File
@@ -45,13 +52,14 @@ final class Fixtures
         return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'text.txt');
     }
 
-    public static function getVideoFile(): File
+    public static function getVideoFile(VideoExtension $videoExtension): File
     {
-        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'video.mp4');
-    }
+        $directory = self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR;
 
-    public static function getVideoFileWithDateTimeInName(): File
-    {
-        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'VID20230731221612.mp4');
+        return match ($videoExtension)
+        {
+            VideoExtension::MP4 => new File($directory . 'VID20230731221612.mp4'),
+            VideoExtension::THREE_GP => new File($directory . 'VID_20230731_221612.3gp'),
+        };
     }
 }

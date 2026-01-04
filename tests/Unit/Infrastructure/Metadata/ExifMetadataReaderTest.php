@@ -30,7 +30,7 @@ final class ExifMetadataReaderTest extends TestCase
     public function test_it_does_not_support_a_video_file(): void
     {
         // Arrange
-        $file = Fixtures::getVideoFile();
+        $file = Fixtures::getGenericVideoFile();
 
         // Act
         $isSupported = $this->sut->supports($file);

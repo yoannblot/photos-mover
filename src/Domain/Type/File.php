@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Type;
 
+use App\Domain\Type\VideoExtension;
 use InvalidArgumentException;
 
 final readonly class File
@@ -45,7 +46,7 @@ final readonly class File
 
     public function isVideo(): bool
     {
-        return $this->getExtension() === 'mp4';
+        return VideoExtension::tryFrom($this->getExtension()) !== null;
     }
 
     private function getExtension(): string

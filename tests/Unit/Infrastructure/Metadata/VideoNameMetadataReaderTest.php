@@ -30,7 +30,7 @@ final class VideoNameMetadataReaderTest extends TestCase
     public function test_it_does_not_support_a_video_not_starting_with_VID_nor_WP(): void
     {
         // Arrange
-        $file = Fixtures::getVideoFile();
+        $file = Fixtures::getGenericVideoFile();
 
         // Act
         $isSupported = $this->sut->supports($file);

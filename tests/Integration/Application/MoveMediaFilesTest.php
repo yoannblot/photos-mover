@@ -6,6 +6,7 @@ namespace Tests\Integration\Application;
 
 use App\Application\MoveMediaFiles;
 use App\Domain\Type\ImageExtension;
+use App\Domain\Type\VideoExtension;
 use DateTimeImmutable;
 use Override;
 use PHPUnit\Framework\Attributes\TestWith;
@@ -17,26 +18,23 @@ final class MoveMediaFilesTest extends IntegrationTestCase
 {
     private MoveMediaFiles $sut;
 
-    public function test_it_moves_a_video_based_on_its_metadata(): void
+    #[TestWith([VideoExtension::MP4, 'vid20230731221612.mp4'])]
+    #[TestWith([VideoExtension::THREE_GP, 'vid_20230731_221612.3gp'])]
+    public function test_it_moves_a_video_based_on_its_metadata(VideoExtension $videoExtension, string $fileName): void
     {
         // Arrange
-        $sourceDirectory      = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
-        Fixtures::duplicateVideoIn($sourceDirectory);
+        $sourceDirectory      = DirectoryHelper::create('Fixtures-video-' . $videoExtension->value);
+        $destinationDirectory = DirectoryHelper::create('Output-video-' . $videoExtension->value);
+        Fixtures::duplicateVideoIn($sourceDirectory, $videoExtension);
 
         // Act
         $this->sut->move($sourceDirectory, $destinationDirectory);
 
         // Assert
-        $expectedVideoPath =
-            $destinationDirectory->getPath()
-            . '2023'
-            . DIRECTORY_SEPARATOR
-            . '07'
-            . DIRECTORY_SEPARATOR
-            . '31'
-            . DIRECTORY_SEPARATOR
-            . 'vid20230731221612.mp4';
+        $expectedVideoPath = $destinationDirectory->getPath() . '2023' . DIRECTORY_SEPARATOR;
+        $expectedVideoPath .= '07' . DIRECTORY_SEPARATOR;
+        $expectedVideoPath .= '31' . DIRECTORY_SEPARATOR;
+        $expectedVideoPath .= $fileName;
         $this->assertFileExists($expectedVideoPath);
 
         unlink($expectedVideoPath);
@@ -59,11 +57,9 @@ final class MoveMediaFilesTest extends IntegrationTestCase
 
         // Assert
         $today             = new DateTimeImmutable();
-        $expectedImagePath = $destinationDirectory->getPath() . $today->format(
-                'Y',
-            ) . DIRECTORY_SEPARATOR . $today->format('m') . DIRECTORY_SEPARATOR . $today->format(
-                'd',
-            ) . DIRECTORY_SEPARATOR . ('image.' . $imageExtension->value);
+        $expectedImagePath = $destinationDirectory->getPath() . $today->format('Y') . DIRECTORY_SEPARATOR;
+        $expectedImagePath .= $today->format('m') . DIRECTORY_SEPARATOR . $today->format('d') . DIRECTORY_SEPARATOR;
+        $expectedImagePath .= 'image.' . $imageExtension->value;
         $this->assertFileExists($expectedImagePath);
 
         unlink($expectedImagePath);

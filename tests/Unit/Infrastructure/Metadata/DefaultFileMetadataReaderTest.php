@@ -27,6 +27,7 @@ final class DefaultFileMetadataReaderTest extends TestCase
         yield 'heic' => [Fixtures::getImageFile(ImageExtension::HEIC)];
         yield 'mp4' => [Fixtures::getVideoFile(VideoExtension::MP4)];
         yield '3gp' => [Fixtures::getVideoFile(VideoExtension::THREE_GP)];
+        yield 'mov' => [Fixtures::getVideoFile(VideoExtension::MOV)];
     }
 
     private DefaultFileMetadataReader $sut;

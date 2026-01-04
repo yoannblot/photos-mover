@@ -8,4 +8,5 @@ enum VideoExtension: string
 {
     case MP4      = 'mp4';
     case THREE_GP = '3gp';
+    case MOV      = 'mov';
 }

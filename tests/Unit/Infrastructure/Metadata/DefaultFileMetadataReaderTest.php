@@ -6,6 +6,7 @@ namespace Tests\Unit\Infrastructure\Metadata;
 
 use App\Domain\Type\File;
 use App\Domain\Type\ImageExtension;
+use App\Domain\Type\VideoExtension;
 use App\Infrastructure\Metadata\DefaultFileMetadataReader;
 use DateTimeImmutable;
 use Iterator;
@@ -24,7 +25,8 @@ final class DefaultFileMetadataReaderTest extends TestCase
         yield 'jpg' => [Fixtures::getImageFile(ImageExtension::JPG)];
         yield 'png' => [Fixtures::getImageFile(ImageExtension::PNG)];
         yield 'heic' => [Fixtures::getImageFile(ImageExtension::HEIC)];
-        yield 'mp4' => [Fixtures::getVideoFile()];
+        yield 'mp4' => [Fixtures::getVideoFile(VideoExtension::MP4)];
+        yield '3gp' => [Fixtures::getVideoFile(VideoExtension::THREE_GP)];
     }
 
     private DefaultFileMetadataReader $sut;

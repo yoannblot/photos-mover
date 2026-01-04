@@ -52,6 +52,7 @@ final class FileTest extends TestCase
 
     #[TestWith([VideoExtension::MP4])]
     #[TestWith([VideoExtension::THREE_GP])]
+    #[TestWith([VideoExtension::MOV])]
     public function test_it_returns_true_when_file_is_a_video(VideoExtension $videoExtension): void
     {
         // Arrange

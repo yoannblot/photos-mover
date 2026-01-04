@@ -20,6 +20,7 @@ final class MoveMediaFilesTest extends IntegrationTestCase
 
     #[TestWith([VideoExtension::MP4, 'vid20230731221612.mp4'])]
     #[TestWith([VideoExtension::THREE_GP, 'vid_20230731_221612.3gp'])]
+    #[TestWith([VideoExtension::MOV, 'vid_20230731_091847.mov'])]
     public function test_it_moves_a_video_based_on_its_metadata(VideoExtension $videoExtension, string $fileName): void
     {
         // Arrange

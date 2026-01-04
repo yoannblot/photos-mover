@@ -60,6 +60,7 @@ final class Fixtures
         {
             VideoExtension::MP4 => new File($directory . 'VID20230731221612.mp4'),
             VideoExtension::THREE_GP => new File($directory . 'VID_20230731_221612.3gp'),
+            VideoExtension::MOV => new File($directory . 'VID_20230731_091847.mov'),
         };
     }
 }

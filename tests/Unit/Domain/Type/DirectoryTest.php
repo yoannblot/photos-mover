@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Unit\Domain\Type;
+namespace Tests\Unit\Domain\Type;
 
 use App\Domain\Type\Directory;
 use InvalidArgumentException;

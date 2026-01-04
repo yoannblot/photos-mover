@@ -6,35 +6,25 @@ namespace Tests\Helper;
 
 use App\Domain\Type\Directory as DirectoryType;
 use App\Domain\Type\File;
+use App\Domain\Type\ImageExtension;
 
 final class Fixtures
 {
     private const string FIXTURES_DIRECTORY = __DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Fixtures';
 
-    public static function createJpgImageFile(DirectoryType $directoryType): File
+    public static function createImageFile(DirectoryType $directoryType, ImageExtension $imageExtension): File
     {
-        $imagePath = $directoryType->getPath() . DIRECTORY_SEPARATOR . 'image.jpg';
-        copy(self::getJpgImageFile()->getPath(), $imagePath);
+        $sourceFile = self::getImageFile($imageExtension)->getPath();
+        $imagePath  = $directoryType->getPath() . DIRECTORY_SEPARATOR . ('image.' . $imageExtension->value);
+        copy($sourceFile, $imagePath);
 
         return new File($imagePath);
     }
 
-    public static function createPngImageFile(DirectoryType $directoryType): File
+    public static function duplicateImageIn(DirectoryType $directoryType, ImageExtension $imageExtension): void
     {
-        $imagePath = $directoryType->getPath() . DIRECTORY_SEPARATOR . 'image.png';
-        copy(self::getPngImageFile()->getPath(), $imagePath);
-
-        return new File($imagePath);
-    }
-
-    public static function duplicateJpgImageIn(DirectoryType $directoryType): void
-    {
-        copy(self::getJpgImageFile()->getPath(), $directoryType->getPath() . DIRECTORY_SEPARATOR . 'image.jpg');
-    }
-
-    public static function duplicatePngImageIn(DirectoryType $directoryType): void
-    {
-        copy(self::getPngImageFile()->getPath(), $directoryType->getPath() . DIRECTORY_SEPARATOR . 'image.png');
+        $sourceFile = self::getImageFile($imageExtension)->getPath();
+        copy($sourceFile, $directoryType->getPath() . DIRECTORY_SEPARATOR . ('image.' . $imageExtension->value));
     }
 
     public static function duplicateVideoIn(DirectoryType $directoryType): void
@@ -45,14 +35,9 @@ final class Fixtures
         );
     }
 
-    public static function getJpgImageFile(): File
+    public static function getImageFile(ImageExtension $imageExtension): File
     {
-        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.jpg');
-    }
-
-    public static function getPngImageFile(): File
-    {
-        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.png');
+        return new File(self::FIXTURES_DIRECTORY . DIRECTORY_SEPARATOR . 'image.' . $imageExtension->value);
     }
 
     public static function getTextFile(): File

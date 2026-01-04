@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Domain\Metadata;
 
 use App\Domain\Metadata\FileMetadataReader;
+use App\Domain\Type\ImageExtension;
 use App\Infrastructure\Metadata\ExifMetadataReader;
 use DateTimeImmutable;
 use InvalidArgumentException;
@@ -20,7 +21,7 @@ final class FileMetadataReaderTest extends TestCase
     {
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $file            = Fixtures::createJpgImageFile($sourceDirectory);
+        $file            = Fixtures::createImageFile($sourceDirectory, ImageExtension::JPG);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);

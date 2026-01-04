@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Infrastructure\Metadata;
 
 use App\Domain\Type\File;
+use App\Domain\Type\ImageExtension;
 use App\Infrastructure\Metadata\DefaultFileMetadataReader;
 use DateTimeImmutable;
 use Iterator;
@@ -20,8 +21,9 @@ final class DefaultFileMetadataReaderTest extends TestCase
      */
     public static function fileDataProvider(): Iterator
     {
-        yield 'jpg' => [Fixtures::getJpgImageFile()];
-        yield 'png' => [Fixtures::getPngImageFile()];
+        yield 'jpg' => [Fixtures::getImageFile(ImageExtension::JPG)];
+        yield 'png' => [Fixtures::getImageFile(ImageExtension::PNG)];
+        yield 'heic' => [Fixtures::getImageFile(ImageExtension::HEIC)];
         yield 'mp4' => [Fixtures::getVideoFile()];
     }
 
@@ -31,7 +33,7 @@ final class DefaultFileMetadataReaderTest extends TestCase
     {
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $file            = Fixtures::createPngImageFile($sourceDirectory);
+        $file            = Fixtures::createImageFile($sourceDirectory, ImageExtension::PNG);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);

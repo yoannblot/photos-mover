@@ -9,6 +9,7 @@ use App\Domain\Finder;
 use App\Domain\Metadata\FileMetadataReader;
 use App\Domain\Mover;
 use App\Domain\PathGenerator;
+use App\Domain\Type\ImageExtension;
 use App\Infrastructure\Metadata\ExifMetadataReader;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +26,7 @@ final class MoveMediaFilesTest extends TestCase
         // Arrange
         $sourceDirectory      = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
         $destinationDirectory = DirectoryHelper::create('Output-' . __FUNCTION__);
-        Fixtures::duplicateJpgImageIn($sourceDirectory);
+        Fixtures::duplicateImageIn($sourceDirectory, ImageExtension::JPG);
 
         // Act
         $this->sut->move($sourceDirectory, $destinationDirectory);

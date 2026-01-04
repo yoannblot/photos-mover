@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Infrastructure\Metadata;
 
+use App\Domain\Type\ImageExtension;
 use App\Infrastructure\Metadata\ExifMetadataReader;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -17,7 +18,7 @@ final class ExifMetadataReaderTest extends TestCase
     public function test_it_does_not_support_a_png_image(): void
     {
         // Arrange
-        $file = Fixtures::getPngImageFile();
+        $file = Fixtures::getImageFile(ImageExtension::PNG);
 
         // Act
         $isSupported = $this->sut->supports($file);
@@ -42,7 +43,7 @@ final class ExifMetadataReaderTest extends TestCase
     {
         // Arrange
         $sourceDirectory = DirectoryHelper::create('Fixtures-' . __FUNCTION__);
-        $file            = Fixtures::createJpgImageFile($sourceDirectory);
+        $file            = Fixtures::createImageFile($sourceDirectory, ImageExtension::JPG);
 
         // Act
         $metadata = $this->sut->extractMetadata($file);
@@ -57,7 +58,7 @@ final class ExifMetadataReaderTest extends TestCase
     public function test_it_supports_a_jpg_image(): void
     {
         // Arrange
-        $file = Fixtures::getJpgImageFile();
+        $file = Fixtures::getImageFile(ImageExtension::JPG);
 
         // Act
         $isSupported = $this->sut->supports($file);

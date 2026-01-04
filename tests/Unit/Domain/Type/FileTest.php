@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Unit\Domain\Type;
+namespace Tests\Unit\Domain\Type;
 
 use App\Domain\Type\File;
+use App\Domain\Type\ImageExtension;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Tests\Helper\Fixtures;
 
@@ -35,10 +37,13 @@ final class FileTest extends TestCase
         $this->assertFalse($isImage);
     }
 
-    public function test_it_returns_true_when_file_is_an_image(): void
+    #[TestWith([ImageExtension::JPG])]
+    #[TestWith([ImageExtension::PNG])]
+    #[TestWith([ImageExtension::HEIC])]
+    public function test_it_returns_true_when_file_is_an_image(ImageExtension $imageExtension): void
     {
         // Arrange
-        $file = new File(Fixtures::getJpgImageFile()->getPath());
+        $file = Fixtures::getImageFile($imageExtension);
 
         // Act
         $isImage = $file->isImage();

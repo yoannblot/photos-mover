@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Unit\Infrastructure\Metadata;
 
 use App\Domain\Type\File;
+use App\Domain\Type\ImageExtension;
 use App\Infrastructure\Metadata\VideoNameMetadataReader;
 use Iterator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -41,7 +42,7 @@ final class VideoNameMetadataReaderTest extends TestCase
     public function test_it_does_not_support_an_image_file(): void
     {
         // Arrange
-        $file = Fixtures::getJpgImageFile();
+        $file = Fixtures::getImageFile(ImageExtension::JPG);
 
         // Act
         $isSupported = $this->sut->supports($file);

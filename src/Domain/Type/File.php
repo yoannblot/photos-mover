@@ -8,8 +8,6 @@ use InvalidArgumentException;
 
 final readonly class File
 {
-    private const array IMAGE_EXTENSIONS = ['jpg', 'gif', 'png', 'jpeg'];
-
     private string $path;
 
     /**
@@ -42,7 +40,7 @@ final readonly class File
 
     public function isImage(): bool
     {
-        return in_array($this->getExtension(), self::IMAGE_EXTENSIONS, true);
+        return ImageExtension::tryFrom($this->getExtension()) !== null;
     }
 
     public function isVideo(): bool

@@ -6,7 +6,9 @@ namespace Tests\Unit\Domain;
 
 use App\Domain\Finder;
 use App\Domain\Type\Directory;
+use App\Domain\Type\ImageExtension;
 use FilesystemIterator;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use RecursiveDirectoryIterator;
 use RecursiveIteratorIterator;
@@ -33,10 +35,14 @@ final class FinderTest extends TestCase
         $this->assertTrue($file->isVideo());
     }
 
-    public function test_it_finds_an_image(): void
+    #[TestWith([ImageExtension::JPG])]
+    #[TestWith([ImageExtension::PNG])]
+    #[TestWith([ImageExtension::HEIC])]
+    public function test_it_finds_an_image(ImageExtension $imageExtension): void
     {
         // Arrange
-        $this->createFile('test.jpg');
+        $fileName = 'test.' . $imageExtension->value;
+        $this->createFile($fileName);
 
         // Act
         $files = $this->sut->find($this->directory);
@@ -44,7 +50,7 @@ final class FinderTest extends TestCase
         // Assert
         $this->assertCount(1, $files);
         $file = $files[0];
-        $this->assertSame('test.jpg', $file->getFileName());
+        $this->assertSame($fileName, $file->getFileName());
         $this->assertTrue($file->isImage());
     }
 

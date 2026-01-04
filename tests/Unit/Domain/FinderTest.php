@@ -26,7 +26,7 @@ final class FinderTest extends TestCase
         $this->createFile('test.mp4');
 
         // Act
-        $files = $this->sut->find($this->directory);
+        $files = iterator_to_array($this->sut->find($this->directory));
 
         // Assert
         $this->assertCount(1, $files);
@@ -45,7 +45,7 @@ final class FinderTest extends TestCase
         $this->createFile($fileName);
 
         // Act
-        $files = $this->sut->find($this->directory);
+        $files = iterator_to_array($this->sut->find($this->directory));
 
         // Assert
         $this->assertCount(1, $files);
@@ -63,7 +63,7 @@ final class FinderTest extends TestCase
         $this->createFile('sub' . DIRECTORY_SEPARATOR . 'test2.mp4');
 
         // Act
-        $files = $this->sut->find($this->directory);
+        $files = iterator_to_array($this->sut->find($this->directory));
 
         // Assert
         $this->assertCount(2, $files);
